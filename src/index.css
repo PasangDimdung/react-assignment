@@ -23,9 +23,9 @@ a:hover {
 }
 
 body {
-  margin: 0;
+  margin: 4%;
   display: flex;
-  place-items: center;
+  /* place-items: center; */
   min-width: 320px;
   min-height: 100vh;
 }
@@ -65,4 +65,10 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+
+.navbar {
+  display: flex;
+  gap: 15px;   /* increase/decrease as needed */
 }
