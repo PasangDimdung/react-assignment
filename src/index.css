@@ -67,8 +67,50 @@ button:focus-visible {
   }
 }
 
-
+/* nav bar style */
 .navbar {
   display: flex;
-  gap: 15px;   /* increase/decrease as needed */
+  gap: 15px;   
+}
+
+.navbar a.active {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+/* expense form style */
+.expense-form input,
+.expense-form select {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 0.8rem;
+}
+
+/* expense table style */
+.expense-table {
+  width: 100%;
+  max-width: 600px;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+}
+
+.expense-table th,
+.expense-table td {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+.expense-table th {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+.expense-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.expense-table tr:hover {
+  background-color: #eaeaea;
 }
