@@ -3,6 +3,7 @@ import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/Home";
 import Expenses from "./pages/Expenses";
 import Weather from "./pages/Weather";
+import NotFound from "./pages/NotFound";
 
 export const router = createBrowserRouter([
    {
@@ -20,6 +21,10 @@ export const router = createBrowserRouter([
       {
         path: "weather",
         element: <Weather />
+      },
+      {
+        path: "*",
+        element: <NotFound />
       }
     ]
   }
