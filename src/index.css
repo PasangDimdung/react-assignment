@@ -114,3 +114,12 @@ button:focus-visible {
 .expense-table tr:hover {
   background-color: #eaeaea;
 }
+
+
+/* weather form style */
+.weather-form input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 0.8rem;
+}
