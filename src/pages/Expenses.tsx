@@ -1,21 +1,14 @@
 import { useState } from "react";
 import ExpenseForm from "../features/expenses/ExpenseForm";
 import ExpenseList from "../features/expenses/ExpenseList";
-
-interface Expense {
-  id: number;
-  title: string;
-  amount: number;
-  date: string;
-  category: string;
-}
+import type { Expense } from "../models/Expense";
+import ExpenseSummary from "../features/expenses/ExpenseSummary";
 
 const Expenses = () => {
   
   const [expenses, setExpenses] = useState<Expense[]>([]);
   
   const handleAddExpense = (expense: Expense) => {
-    debugger;
     setExpenses((prev) => [...prev, expense]);
   };
 
@@ -24,6 +17,7 @@ const Expenses = () => {
       <h2>Expense Tracker</h2>
       <ExpenseForm onAddExpense={handleAddExpense}/>
       <ExpenseList expenses={expenses}/>
+      <ExpenseSummary expenses={expenses}/>
     </section>
   );
 };
