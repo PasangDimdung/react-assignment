@@ -1,4 +1,4 @@
-import type { Expense } from "../../models/Expense";
+import type { Expense } from "../../models/Expense.type";
 
 interface ExpenseSummaryProps {
   expenses: Expense[];

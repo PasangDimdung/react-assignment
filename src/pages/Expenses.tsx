@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ExpenseForm from "../features/expenses/ExpenseForm";
 import ExpenseList from "../features/expenses/ExpenseList";
-import type { Expense } from "../models/Expense";
+import type { Expense } from "../models/Expense.type";
 import ExpenseSummary from "../features/expenses/ExpenseSummary";
 
 const Expenses = () => {
