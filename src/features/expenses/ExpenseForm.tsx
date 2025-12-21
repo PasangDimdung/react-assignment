@@ -40,11 +40,20 @@ const ExpenseForm = ({ onAddExpense }: any) => {
     });
 
      // Reset form
-    setForm({ title: "", amount: "", category: "", date: "" });
+    handleReset();
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleReset = () => {
+    setForm({
+      title: "",
+      amount: "",
+      category: "",
+      date: "",
+    });
   };
 
   return (
@@ -62,6 +71,7 @@ const ExpenseForm = ({ onAddExpense }: any) => {
 
         <input  name="date" type="date" value={form.date} onChange={handleChange}/>
         <button type="submit">Add Expense</button>
+        <button type="button" onClick={handleReset} style={{ marginLeft: "10px" }}>Reset</button>
       </form>
     </>
   );
