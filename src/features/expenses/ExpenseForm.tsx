@@ -1,5 +1,12 @@
 import { useState } from "react";
-
+ 
+interface ExpenseFormErrors {
+  title?: string;
+  amount?: string;
+  category?: string;
+  date?: string;
+}
+  
 const ExpenseForm = ({ onAddExpense }: any) => {
 
   const [form, setForm] = useState({
@@ -9,25 +16,30 @@ const ExpenseForm = ({ onAddExpense }: any) => {
     date: "",
   });
 
+  const [errors, setErrors] = useState<ExpenseFormErrors>({});
+
    const handleSubmit = (e: React.FormEvent) => {
-    debugger;
     e.preventDefault();
+    
+    const newErrors: ExpenseFormErrors = {};
+
     if (!form.title) {
-      alert("Title is required.");
-      return;
+      newErrors.title = "Title is required.";
     }
     if (!form.amount) {
-      alert("Amount is required.");
-      return;
+      newErrors.amount = "Amount is required."
     }
     
     if (!form.category) {
-      alert("Category is required.");
-      return;
+      newErrors.category = "Category is required.";
     }
 
     if (!form.date) {
-      alert("Date is required.");
+      newErrors.date = "Date is required.";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
       return;
     }
 
@@ -41,10 +53,13 @@ const ExpenseForm = ({ onAddExpense }: any) => {
 
      // Reset form
     handleReset();
+   
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm(prev => ({ ...prev, [name]: value }));
+    setErrors(prev => ({ ...prev, [name as keyof ExpenseFormErrors]: undefined }));
   };
 
   const handleReset = () => {
@@ -54,25 +69,42 @@ const ExpenseForm = ({ onAddExpense }: any) => {
       category: "",
       date: "",
     });
+    setErrors({});
   };
 
   return (
     <>
-      <form className="expense-form" onSubmit={handleSubmit}>
+ <form className="expense-form" onSubmit={handleSubmit} style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+      <div className="expense-field">
         <input name="title" placeholder="Title" value={form.title} onChange={handleChange} />
-        <input name="amount" type="number" placeholder="Amount" value={form.amount} onChange={handleChange} />
+        {errors.title && <span style={{ color: "red", fontSize: "0.75rem" }}>{errors.title}</span>}
+      </div>
 
+      <div className="expense-field">
+        <input name="amount" type="number" placeholder="Amount" value={form.amount} onChange={handleChange}/>
+        {errors.amount && <span style={{ color: "red", fontSize: "0.75rem" }}>{errors.amount}</span>}
+      </div>
+
+      <div className="expense-field">
         <select name="category" value={form.category} onChange={handleChange}>
           <option value="">Select Category</option>
           <option value="Food">Food</option>
           <option value="Travel">Travel</option>
           <option value="Shopping">Shopping</option>
         </select>
+        {errors.category && <span style={{ color: "red", fontSize: "0.75rem" }}>{errors.category}</span>}
+      </div>
 
-        <input  name="date" type="date" value={form.date} onChange={handleChange}/>
+      <div className="expense-field">
+        <input name="date" type="date" value={form.date} onChange={handleChange} />
+        {errors.date && <span style={{ color: "red", fontSize: "0.75rem" }}>{errors.date}</span>}
+      </div>
+
+      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
         <button type="submit">Add Expense</button>
-        <button type="button" onClick={handleReset} style={{ marginLeft: "10px" }}>Reset</button>
-      </form>
+        <button type="button" onClick={handleReset}>Reset</button>
+      </div>
+    </form>
     </>
   );
 };

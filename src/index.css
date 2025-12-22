@@ -115,6 +115,11 @@ button:focus-visible {
   background-color: #eaeaea;
 }
 
+.expense-field {
+  display: flex;
+  flex-direction: column; /* input and error stack vertically */
+}
+
 
 /* weather form style */
 .weather-form input {
