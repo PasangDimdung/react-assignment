@@ -77,12 +77,12 @@ const ExpenseForm = ({ onAddExpense }: any) => {
  <form className="expense-form" onSubmit={handleSubmit} style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
       <div className="expense-field">
         <input name="title" placeholder="Title" value={form.title} onChange={handleChange} />
-        {errors.title && <span style={{ color: "red", fontSize: "0.75rem" }}>{errors.title}</span>}
+        {errors.title && <span className="expense-errors">{errors.title}</span>}
       </div>
 
       <div className="expense-field">
         <input name="amount" type="number" placeholder="Amount" value={form.amount} onChange={handleChange}/>
-        {errors.amount && <span style={{ color: "red", fontSize: "0.75rem" }}>{errors.amount}</span>}
+        {errors.amount && <span className="expense-errors">{errors.amount}</span>}
       </div>
 
       <div className="expense-field">
@@ -92,12 +92,12 @@ const ExpenseForm = ({ onAddExpense }: any) => {
           <option value="Travel">Travel</option>
           <option value="Shopping">Shopping</option>
         </select>
-        {errors.category && <span style={{ color: "red", fontSize: "0.75rem" }}>{errors.category}</span>}
+        {errors.category && <span className="expense-errors">{errors.category}</span>}
       </div>
 
       <div className="expense-field">
         <input name="date" type="date" value={form.date} onChange={handleChange} />
-        {errors.date && <span style={{ color: "red", fontSize: "0.75rem" }}>{errors.date}</span>}
+        {errors.date && <span className="expense-errors">{errors.date}</span>}
       </div>
 
       <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>

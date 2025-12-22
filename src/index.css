@@ -117,7 +117,12 @@ button:focus-visible {
 
 .expense-field {
   display: flex;
-  flex-direction: column; /* input and error stack vertically */
+  flex-direction: column; 
+}
+
+.expense-errors {
+  color: red; 
+  font-size: 0.75rem;
 }
 
 
