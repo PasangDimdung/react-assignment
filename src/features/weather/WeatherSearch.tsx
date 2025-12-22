@@ -7,16 +7,17 @@ const WeatherSearch: React.FC = () => {
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [error, setError] = useState("");
 
-  const API_KEY = "7a04994c28dfffcb2dc8cc907f066ba2"; 
+  const API_KEY = import.meta.env.VITE_API_KEY;
+  const BASE_URL = import.meta.env.VITE_OPENWEATHER_BASE_URL;
+  
+  const url = `${BASE_URL}/weather?q=${city}&units=metric&appid=${API_KEY}`;
 
   const handleSearch = async () => {
     if (!city) return;
 
     try {
       setError("");
-      const res = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`
-      );
+      const res = await fetch(url);
       const data = await res.json();
 
       if (data.cod !== 200) {
