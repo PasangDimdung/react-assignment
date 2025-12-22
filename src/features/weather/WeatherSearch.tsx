@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { WeatherData } from "../../models/WeatherData.type";
 import WeatherCard from "./WeatherCard";
+import Input from "../../components/Input";
 
 const WeatherSearch: React.FC = () => {
   const [city, setCity] = useState("");
@@ -40,17 +41,13 @@ const WeatherSearch: React.FC = () => {
 
   return (
     <div className="weather-form">
-      <input
-        type="text"
-        value={city}
-        onChange={(e) => setCity(e.target.value)}
-        placeholder="Enter city"
-      />
-      <button onClick={handleSearch}>Search</button>
-      <button onClick={handleReset} style={{ marginLeft: "10px" }}>Reset</button>
-
-      {error && <p style={{ color: "red" }}>{error}</p>}
-  
+      <Input name="city" value={city} onChange={(e) => setCity(e.target.value)} placeholder="Enter city" type="text" error={error}/>
+      
+      <div className="button-group">
+        <button onClick={handleSearch}>Search</button>
+        <button onClick={handleReset}>Reset</button>
+      </div>
+      
       {
         weather && 
         <div style={{ marginTop: "2rem" }}>

@@ -156,9 +156,20 @@ button:focus-visible {
 }
 
 /* weather form style */
+.weather-form {
+  display: flex;
+  align-items: center;
+  gap: 10px; 
+}
+
 .weather-form input {
+  flex: 1; 
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
-  margin-right: 0.8rem;
+}
+
+.weather-form .button-group {
+  display: flex;
+  gap: 10px; 
 }
