@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Input from "../../components/Input";
  
 interface ExpenseFormErrors {
   title?: string;
@@ -75,30 +76,21 @@ const ExpenseForm = ({ onAddExpense }: any) => {
   return (
     <>
  <form className="expense-form" onSubmit={handleSubmit} style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-      <div className="expense-field">
-        <input name="title" placeholder="Title" value={form.title} onChange={handleChange} />
-        {errors.title && <span className="expense-errors">{errors.title}</span>}
-      </div>
 
-      <div className="expense-field">
-        <input name="amount" type="number" placeholder="Amount" value={form.amount} onChange={handleChange}/>
-        {errors.amount && <span className="expense-errors">{errors.amount}</span>}
-      </div>
+      <Input name="title" placeholder="Title" value={form.title} onChange={handleChange} error={errors.title} />
 
-      <div className="expense-field">
-        <select name="category" value={form.category} onChange={handleChange}>
-          <option value="">Select Category</option>
-          <option value="Food">Food</option>
-          <option value="Travel">Travel</option>
-          <option value="Shopping">Shopping</option>
-        </select>
-        {errors.category && <span className="expense-errors">{errors.category}</span>}
-      </div>
+      <Input name="amount" type="number" placeholder="Amount" value={form.amount} onChange={handleChange} error={errors.amount} />
 
-      <div className="expense-field">
-        <input name="date" type="date" value={form.date} onChange={handleChange} />
-        {errors.date && <span className="expense-errors">{errors.date}</span>}
-      </div>
+      <Input name="category" placeholder="Select Category" value={form.category} onChange={handleChange}
+        options={[
+          { label: "Food", value: "Food" },
+          { label: "Travel", value: "Travel" },
+          { label: "Shopping", value: "Shopping" },
+        ]}
+        error={errors.category}
+      />
+
+      <Input name="date" type="date" value={form.date} onChange={handleChange} error={errors.date} />
 
       <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
         <button type="submit">Add Expense</button>

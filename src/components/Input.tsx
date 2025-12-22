@@ -1,0 +1,53 @@
+import InputError from "./InputError";
+
+type Option = {
+  label: string;
+  value: string;
+};
+
+type FormFieldProps = {
+  name: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  placeholder?: string;
+  type?: string;
+  options?: Option[];
+  error?: string;
+};
+
+const Input = ({
+  name,
+  value,
+  onChange,
+  placeholder,
+  type = "text",
+  options,
+  error,
+}: FormFieldProps) => {
+  return (
+    <div className="expense-field">
+      {options ? (
+        <select name={name} value={value} onChange={onChange}>
+          <option value="">{placeholder}</option>
+          {options.map((opt) => (
+            <option key={opt.value} value={opt.value}>
+              {opt.label}
+            </option>
+          ))}
+        </select>
+      ) : (
+        <input
+          name={name}
+          type={type}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+        />
+      )}
+
+      <InputError message={error} />
+    </div>
+  );
+};
+
+export default Input;
