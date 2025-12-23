@@ -7,6 +7,7 @@ const WeatherSearch: React.FC = () => {
   const [city, setCity] = useState("");
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const API_KEY = import.meta.env.VITE_API_KEY;
   const BASE_URL = import.meta.env.VITE_OPENWEATHER_BASE_URL;
@@ -14,12 +15,20 @@ const WeatherSearch: React.FC = () => {
   const url = `${BASE_URL}/weather?q=${city}&units=metric&appid=${API_KEY}`;
 
   useEffect(() => {
-    if (!city.trim()) return;
+    if (!city.trim()) {
+      setWeather(null);
+      setError("");
+      setLoading(false);
+      return;
+    }
 
+    const controller = new AbortController(); 
+    
     const fetchWeather = async () => {
+        setLoading(true);
+        setError("");
         try {
-          setError("");
-          const res = await fetch(url);
+          const res = await fetch(url, { signal: controller.signal });
           const data = await res.json();
 
           if (data.cod !== 200) {
@@ -31,10 +40,19 @@ const WeatherSearch: React.FC = () => {
         } catch (err) {
           setError("Failed to fetch weather data");
           setWeather(null);
+        } finally {
+          setLoading(false);
+          setError("");
         }
     }
+
     fetchWeather();
 
+     // Cleanup function
+    return () => {
+      controller.abort();
+    };
+    
   },[city]);
 
   //EVENT HANDLERS ONLY update state
@@ -57,7 +75,8 @@ const WeatherSearch: React.FC = () => {
           <button onClick={handleReset}>Reset</button>
         </div>
       </div>
-
+      
+      {loading && <p>Loading...</p>}
       {weather && (
         <div className="weather-result">
           <WeatherCard data={weather} />
