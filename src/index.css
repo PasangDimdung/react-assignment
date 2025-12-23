@@ -116,13 +116,17 @@ button:focus-visible {
 }
 
 .expense-field {
+  position: relative;
   display: flex;
   flex-direction: column; 
 }
 
 .expense-errors {
-  color: red; 
+  color: red;
   font-size: 0.75rem;
+  position: absolute;
+  bottom: -1.2rem; 
+  left: 0;
 }
 
 

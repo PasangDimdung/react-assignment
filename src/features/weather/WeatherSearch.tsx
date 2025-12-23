@@ -51,6 +51,7 @@ const WeatherSearch: React.FC = () => {
 
      // Cleanup function
     return () => {
+      setError("");
       clearTimeout(timer);
       controller.abort();
     };
