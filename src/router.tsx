@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Expenses from "./pages/Expenses";
 import Weather from "./pages/Weather";
 import NotFound from "./pages/NotFound";
+import { ExpenseProvider } from "./context/ExpenseContext";
 
 export const router = createBrowserRouter([
    {
@@ -16,7 +17,12 @@ export const router = createBrowserRouter([
       },
          {
         path: "expenses",
-        element: <Expenses />
+        element: 
+        (
+          <ExpenseProvider>
+            <Expenses />
+          </ExpenseProvider>
+        ),
       },
       {
         path: "weather",

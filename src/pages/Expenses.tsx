@@ -1,40 +1,25 @@
-import { useState } from "react";
 import ExpenseForm from "../features/expenses/ExpenseForm";
 import ExpenseList from "../features/expenses/ExpenseList";
-import type { Expense } from "../models/Expense.type";
 import ExpenseSummary from "../features/expenses/ExpenseSummary";
 import ExpenseFilter from "../features/expenses/ExpenseFilter";
+import { useExpenses } from "../context/ExpenseContext";
 
 const Expenses = () => {
   
-  const [expenses, setExpenses] = useState<Expense[]>([]);
-  const [categoryFilter, setCategoryFilter] = useState("");
-  const [dateFilter, setDateFilter] = useState("");
+    const { expenses, addExpense, filters, setCategoryFilter, setDateFilter, resetFilters } = useExpenses();
 
-  const handleAddExpense = (expense: Expense) => {
-    setExpenses((prev) => [...prev, expense]);
-  };
 
   const filteredExpenses = expenses.filter((expense) => {
-    const matchCategory =
-      categoryFilter === "" || expense.category === categoryFilter;
-
-    const matchDate =
-      dateFilter === "" || expense.date === dateFilter;
-
+    const matchCategory = !filters.category || expense.category === filters.category;
+    const matchDate = !filters.date || expense.date === filters.date;
     return matchCategory && matchDate;
   });
-
-  const resetFilters = () => {
-    setCategoryFilter("");
-    setDateFilter("");
-  };
 
   return (
     <section>
       <h2>Expense Tracker</h2>
-      <ExpenseFilter category={categoryFilter} date={dateFilter} onCategoryChange={setCategoryFilter} onDateChange={setDateFilter} onReset={resetFilters}/>
-      <ExpenseForm onAddExpense={handleAddExpense}/>
+      <ExpenseFilter category={filters.category} date={filters.date} onCategoryChange={setCategoryFilter} onDateChange={setDateFilter} onReset={resetFilters}/>
+      <ExpenseForm onAddExpense={addExpense}/>
       <ExpenseList expenses={filteredExpenses}/>
       <ExpenseSummary expenses={filteredExpenses}/>
     </section>
