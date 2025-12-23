@@ -57,8 +57,7 @@ const ExpenseForm = ({ onAddExpense }: any) => {
    
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
+  const handleChange = (value: string, name: string) => {
     setForm(prev => ({ ...prev, [name]: value }));
     setErrors(prev => ({ ...prev, [name as keyof ExpenseFormErrors]: undefined }));
   };

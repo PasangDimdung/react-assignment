@@ -8,7 +8,7 @@ type Option = {
 type FormFieldProps = {
   name: string;
   value: string;
-  onChange: (value: string) => void;
+  onChange: (value: string, name: string) => void;
   placeholder?: string;
   type?: string;
   options?: Option[];
@@ -27,7 +27,7 @@ const Input = ({
 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-      onChange(e.target.value); 
+      onChange(e.target.value, e.target.name); 
     };
 
   return (
