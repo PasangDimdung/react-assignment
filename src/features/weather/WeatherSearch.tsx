@@ -42,14 +42,16 @@ const WeatherSearch: React.FC = () => {
           setWeather(null);
         } finally {
           setLoading(false);
-          setError("");
         }
     }
 
-    fetchWeather();
+    const timer = setTimeout(()=> {
+        fetchWeather();
+    },500)
 
      // Cleanup function
     return () => {
+      clearTimeout(timer);
       controller.abort();
     };
     
