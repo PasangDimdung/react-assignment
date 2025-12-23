@@ -1,5 +1,6 @@
-import { createContext, useContext, useState,  useMemo, type ReactNode } from "react";
+import { createContext, useContext, useState,  useMemo, type ReactNode, useEffect } from "react";
 import type { WeatherData } from "../models/WeatherData.type";
+import { useSearchParams } from "react-router-dom";
 
 interface WeatherContextType {
   city: string;
@@ -24,12 +25,38 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const API_KEY = import.meta.env.VITE_API_KEY;
   const BASE_URL = import.meta.env.VITE_OPENWEATHER_BASE_URL;
 
+  const cityFromURL = searchParams.get("city") || "";
+
+  useEffect(() => {
+    if (city !== cityFromURL) {
+      setCity(cityFromURL);
+    }
+  }, [cityFromURL]);
+
+  const setCityAndURL = (value: string) => {
+    setCity(value);
+
+    const params = new URLSearchParams(searchParams);
+    if (value) params.set("city", value);
+    else params.delete("city");
+
+    setSearchParams(params, { replace: true });
+  };
+
   const fetchWeather = async (query: string, signal: AbortSignal ) => {
-    if (!query.trim()) return;
+    
+    if (!query.trim()) {
+      setWeather(null);
+      setError("");
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     setError("");
 
@@ -59,7 +86,7 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const value = useMemo(
-    () => ({ city, setCity, weather, error, loading, reset, fetchWeather }),
+    () => ({ city, setCity: setCityAndURL, weather, error, loading, reset, fetchWeather }),
     [city, weather, error, loading]
   );
 
