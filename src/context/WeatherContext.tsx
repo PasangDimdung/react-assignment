@@ -83,6 +83,7 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
     setWeather(null);
     setError("");
     setLoading(false);
+    setSearchParams({});
   };
 
   const value = useMemo(
