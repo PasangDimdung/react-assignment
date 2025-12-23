@@ -8,7 +8,7 @@ type Option = {
 type FormFieldProps = {
   name: string;
   value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  onChange: (value: string) => void;
   placeholder?: string;
   type?: string;
   options?: Option[];
@@ -24,10 +24,16 @@ const Input = ({
   options,
   error,
 }: FormFieldProps) => {
+
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+      onChange(e.target.value); 
+    };
+
   return (
     <div className="expense-field">
       {options ? (
-        <select name={name} value={value} onChange={onChange}>
+        <select name={name} value={value} onChange={handleChange}>
           <option value="">{placeholder}</option>
           {options.map((opt) => (
             <option key={opt.value} value={opt.value}>
@@ -41,7 +47,7 @@ const Input = ({
           type={type}
           placeholder={placeholder}
           value={value}
-          onChange={onChange}
+          onChange={handleChange}
         />
       )}
 

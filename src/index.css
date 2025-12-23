@@ -156,14 +156,21 @@ button:focus-visible {
 }
 
 /* weather form style */
+.weather-container {
+  display: flex;
+  flex-direction: column; /* stack children vertically */
+  gap: 1rem; /* space between form and card */
+  max-width: 600px;
+}
+
 .weather-form {
   display: flex;
   align-items: center;
-  gap: 10px; 
+  gap: 10px;
 }
 
 .weather-form input {
-  flex: 1; 
+  flex: 1;
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -171,5 +178,12 @@ button:focus-visible {
 
 .weather-form .button-group {
   display: flex;
-  gap: 10px; 
+  gap: 10px;
 }
+
+.weather-result {
+  margin-top: 1rem;
+}
+
+
+

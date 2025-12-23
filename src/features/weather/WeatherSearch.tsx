@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { WeatherData } from "../../models/WeatherData.type";
 import WeatherCard from "./WeatherCard";
 import Input from "../../components/Input";
@@ -13,24 +13,33 @@ const WeatherSearch: React.FC = () => {
   
   const url = `${BASE_URL}/weather?q=${city}&units=metric&appid=${API_KEY}`;
 
-  const handleSearch = async () => {
-    if (!city) return;
+  useEffect(() => {
+    if (!city.trim()) return;
 
-    try {
-      setError("");
-      const res = await fetch(url);
-      const data = await res.json();
+    const fetchWeather = async () => {
+        try {
+          setError("");
+          const res = await fetch(url);
+          const data = await res.json();
 
-      if (data.cod !== 200) {
-        setError(data.message);
-        setWeather(null);
-      } else {
-        setWeather(data);
-      }
-    } catch (err) {
-      setError("Failed to fetch weather data");
-      setWeather(null);
+          if (data.cod !== 200) {
+            setError(data.message);
+            setWeather(null);
+          } else {
+            setWeather(data);
+          }
+        } catch (err) {
+          setError("Failed to fetch weather data");
+          setWeather(null);
+        }
     }
+    fetchWeather();
+
+  },[city]);
+
+  //EVENT HANDLERS ONLY update state
+  const handleCityChange = (value: string) => {
+    setCity(value);
   };
 
   const handleReset = () => {
@@ -40,20 +49,20 @@ const WeatherSearch: React.FC = () => {
   };
 
   return (
-    <div className="weather-form">
-      <Input name="city" value={city} onChange={(e) => setCity(e.target.value)} placeholder="Enter city" type="text" error={error}/>
-      
-      <div className="button-group">
-        <button onClick={handleSearch}>Search</button>
-        <button onClick={handleReset}>Reset</button>
-      </div>
-      
-      {
-        weather && 
-        <div style={{ marginTop: "2rem" }}>
-            <WeatherCard data={weather} />
+    <div className="weather-container">
+      <div className="weather-form">
+        <Input name="city" value={city} onChange={handleCityChange} placeholder="Enter city" type="text" error={error}/>
+
+        <div className="button-group">
+          <button onClick={handleReset}>Reset</button>
         </div>
-      }
+      </div>
+
+      {weather && (
+        <div className="weather-result">
+          <WeatherCard data={weather} />
+        </div>
+      )}
     </div>
   );
 };
